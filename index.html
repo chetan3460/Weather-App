@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="style/index.css">
 </head>
 <body>
-    <div class="lds-dual-ring center display-none"></div>
-    <main>
+    <div id="app-loader" class="lds-dual-ring center "></div>
+    <main hidden>
         <button id="open-menu-btn" class="ripple"><img class="icon-sm-28" src="./assets/images/icons/menu.png"alt="menu-btn">
         </button>
         <!---------------------Current Weather Section------->
@@ -78,7 +78,7 @@
             </div>
 
             <!--Hourly weather -->
-            <div id="hourly-weather-wrapper" class="lower-panel-body">
+            <div id="hourly-weather-wrapper" class="lower-panel-body" visible="false">
                 <div class="flex-container weather-box ">
                     <div>
                         <h1>14:00</h1>
