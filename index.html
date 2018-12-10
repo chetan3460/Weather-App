@@ -24,6 +24,104 @@
         <!---------------------Current Weather Section------->
         <section id="current-day-weather-container">
             <h1 class="location-label">Goa</h1>
+            <div class="flex-container" id="temprature-summary-container">
+                <div>
+                    <img src="./assets/images/summary-icons/clear-day-white.png" alt="">
+                </div>
+                <div>
+                    <h1 id="degrees-label">20&#176;
+                    </h1>
+                    <p id="summary-label">clear Day</p>
+                </div>
+            </div>
+            <!--Humidity and wind speed-->
+            <div class="flex-container" id="humidity-wind-container">
+
+                <!---Humidity-->
+
+                <div>
+                    <img  class="icon-sm-30" src="./assets/images/icons/humidity.png" alt="">
+                    <span>20%</span>
+                </div>
+
+                <!---Wind-->
+
+                <div>
+                    <img  class="icon-sm-30" src="./assets/images/icons/wind-speed-flag.png" alt="">
+                    <span>3 m /h</span>
+                </div>
+            </div>
+            
+        </section>
+
+        <!--Lower panel-->
+        <section class="lower-panel">
+            <button id="toggle-hourly-weather" class="ripple center_x">
+                <img src="./assets/images/icons/up-arrow.png" alt="">
+            </button>
+
+            <!--Daily weather -->
+            <div id="daily-weather-wrapper" class="lower-panel-body">
+                <div class="flex-container weather-box ">
+                    <div>
+                        <h1>Sunday</h1>
+                    </div>
+                    <div class="flex-container">
+                        <div>
+                            <p>18&#176;</p>
+                        </div>
+                        <div>
+                            <img class="icon-sm-30"src="./assets/images/summary-icons/clear-day-white.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Hourly weather -->
+            <div id="hourly-weather-wrapper" class="lower-panel-body">
+                <div class="flex-container weather-box ">
+                    <div>
+                        <h1>14:00</h1>
+                    </div>
+                <div class="flex-container">
+                <div>
+                    <p>18&#176;</p>
+                </div>
+                    <div>
+                        <img class="icon-sm-30"src="./assets/images/summary-icons/clear-day-grey.png">
+                    </div>
+                    </div>
+                </div>
+            </div>    
+        </section>
+
+        <!--Menu container-->
+        <section id="menu-container">
+            <button id="close-menu-btn" class="ripple">
+                &#10006;
+            </button>
+            <!--Container-->
+            <div>
+                    <!--Add location-->
+                <div id="add-location-wrapper">
+                    <input type="text" placeholder="Location" id="location-input">
+                    <br>
+                    <button class="ripple disabled" id="add-city-btn" disabled>Add City</button>
+                    <h1 class="location-label">Goa</h1>
+                </div>
+
+                <!--Saved Cities-->
+                <div id="saved-cities-wrapper">
+                    <div class="flex-container saved-city-box">
+                        <div class="ripple">
+                            <h1>Goa</h1>
+                        </div>
+                        <div>
+                            <button class="ripple remove-saved-city"></button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </section>
     </main>
     <script src="./scripts/index.js"></script>
