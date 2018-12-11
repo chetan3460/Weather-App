@@ -16,7 +16,7 @@
     //hide the app and show loading screen
     const loadApp = ()=>{
         document.querySelector("#app-loader").classList.remove('display-none');
-        document.querySelector("#main").setAttribute('hidden','true');
+        document.querySelector("main").setAttribute('hidden','true');
     };
 
     //show menu & hide menu
@@ -78,7 +78,7 @@
         addCityBtn.classList.add('disabled');
         
         //
-        console.log("get waether data for",location)
+        WEATHER.getWeather(location)
     }
 
     locationInput.addEventListener('input',function(){
@@ -106,5 +106,43 @@
 
             const _getGeocodeURL = (location) =>`https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${geocoderKey}`;
             
-            const _getDarkSkyURL = (lat,lng) => `https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng}`;
+            const _getDarkSkyURL = (lat,lng) => `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng}`;
+
+
+            const _getDarkSkyData = (url) =>{
+                axios.get(url)
+                    .then( (res) => {
+                        console.log(res);
+                    })
+                    .catch( (err)=> {
+                        console.err(err);
+                    }) 
+            };
+
+            const getWeather = (location) => {
+
+                UI.loadApp();
+
+                let geocodeURL = _getGeocodeURL(location);
+
+                axios.get(geocodeURL)
+                .then( (res) => {
+                    let lat = res.data.results[0].geometry.lat,
+                        lng = res.data.results[0].geometry.lng;
+
+                        let darkskyURL = _getDarkSkyURL(lat,lng);
+
+                        _getDarkSkyData(darkskyURL);
+                })
+                .catch( (err)=> {
+                    console.log(err)
+                })
+
+            };
+            return{
+                getWeather
+            }
   })();
+  window.onload = function () {
+      UI.showApp();
+  }
