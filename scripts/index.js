@@ -59,3 +59,52 @@
  window.onload = function (){
      UI.showApp();
  }
+ /**
+  * 
+  * Geting data about location to search weather
+  * 
+  */
+
+  const GETLOCATION = (function (){
+
+    let location;
+    const locationInput = document.querySelector("#location-input"),
+    addCityBtn = document.querySelector("#add-city-btn");
+
+    const _addCity = () => {
+        location = locationInput.value;
+        locationInput.value = "";
+        addCityBtn.setAttribute('disabled','true');
+        addCityBtn.classList.add('disabled');
+        
+        //
+        console.log("get waether data for",location)
+    }
+
+    locationInput.addEventListener('input',function(){
+        let inputText = this.value.trim();
+
+        if(inputText != ''){
+            addCityBtn.removeAttribute('disabled');
+            addCityBtn.classList.remove('disabled');
+        } else {
+            addCityBtn.setAttribute('disabled','true');
+            addCityBtn.classList.add('disabled');
+        }
+    })
+    addCityBtn.addEventListener('click',_addCity);
+  })();
+
+  /**
+   * Geting weather data through api
+   * 
+   */
+  const WEATHER = (function (){
+
+    const darkSkyKey ='604cc3c79c55226a9f72015c4bec311a',
+            geocoderKey = '9063212584e04bdeb9faf2d6de3275f1';
+
+            const _getGeocodeURL = (location) =>`https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${geocoderKey}`;
+            
+            const _getDarkSkyURL = (lat,lng) => `https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng}`;
+  })();
