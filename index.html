@@ -23,15 +23,14 @@
         </button>
         <!---------------------Current Weather Section------->
         <section id="current-day-weather-container">
-            <h1 class="location-label">Goa</h1>
+            <h1 class="location-label"></h1>
             <div class="flex-container" id="temprature-summary-container">
                 <div>
-                    <img src="./assets/images/summary-icons/clear-day-white.png" alt="">
+                    <img src="./assets/images/summary-icons/clear-day-white.png" alt="summary Icon" id="currentlyIcon">
                 </div>
                 <div>
-                    <h1 id="degrees-label">20&#176;
-                    </h1>
-                    <p id="summary-label">clear Day</p>
+                    <h1 id="degrees-label"></h1>
+                    <p id="summary-label"></p>
                 </div>
             </div>
             <!--Humidity and wind speed-->
@@ -41,14 +40,14 @@
 
                 <div>
                     <img  class="icon-sm-30" src="./assets/images/icons/humidity.png" alt="">
-                    <span>20%</span>
+                    <span id="humidity-label"></span>
                 </div>
 
                 <!---Wind-->
 
                 <div>
                     <img  class="icon-sm-30" src="./assets/images/icons/wind-speed-flag.png" alt="">
-                    <span>3 m /h</span>
+                    <span id="wind-speed-label"></span>
                 </div>
             </div>
             
@@ -62,7 +61,7 @@
 
             <!--Daily weather -->
             <div id="daily-weather-wrapper" class="lower-panel-body">
-                <div class="flex-container weather-box ">
+                <div class="flex-container weather-box display-none">
                     <div>
                         <h1>Sunday</h1>
                     </div>
@@ -79,7 +78,7 @@
 
             <!--Hourly weather -->
             <div id="hourly-weather-wrapper" class="lower-panel-body" visible="false">
-                <div class="flex-container weather-box ">
+                <div class="flex-container weather-box display-none">
                     <div>
                         <h1>14:00</h1>
                     </div>
@@ -107,7 +106,7 @@
                     <input type="text" placeholder="Location" id="location-input">
                     <br>
                     <button class="ripple disabled" id="add-city-btn" disabled>Add City</button>
-                    <h1 class="location-label">Goa</h1>
+                    <h1 class="location-label"></h1>
                 </div>
 
                 <!--Saved Cities-->
