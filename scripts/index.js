@@ -154,9 +154,7 @@
     }
  })();
 
- window.onload = function (){
-     UI.showApp();
- }
+
  /**
   * 
   * Geting data about location to search weather
@@ -168,15 +166,15 @@
     let location;
     const locationInput = document.querySelector("#location-input"),
     addCityBtn = document.querySelector("#add-city-btn");
-
+    //handle submit event
     const _addCity = () => {
         location = locationInput.value;
         locationInput.value = "";
         addCityBtn.setAttribute('disabled','true');
         addCityBtn.classList.add('disabled');
         
-        //
-        WEATHER.getWeather(location)
+        //get weather data
+        WEATHER.getWeather(location,true)
     }
 
     locationInput.addEventListener('input',function(){
@@ -211,6 +209,8 @@
                 axios.get(url)
                     .then( (res) => {
                         console.log(res); 
+
+
                         UI.drawWeatherData(res.data,location)
                         
                     })
@@ -219,7 +219,7 @@
                     }) 
             };
 
-            const getWeather = (location) => {
+            const getWeather = (location,save) => {
 
                 UI.loadApp();
 
@@ -227,6 +227,16 @@
 
                 axios.get(geocodeURL)
                 .then( (res) => {
+                    console.log(res);
+                    if(res.data.results.length == 0){
+                        console.error("Invalid Location");
+                        UI.showApp();
+                        return;
+                    }
+                    if(save){
+                    LOCALSTORAGE.save(location);
+                    }
+
                     let lat = res.data.results[0].geometry.lat,
                         lng = res.data.results[0].geometry.lng;
 
@@ -243,6 +253,83 @@
                 getWeather
             }
   })();
+
+
+/**
+ * 
+ * Local storage Api 
+ * 
+ * store data retrive and delete the cities addes by user 
+ */
+
+const LOCALSTORAGE = (function () {
+
+    let savedCities = [];
+    const save = (city) =>{
+        savedCities.push(city);
+        localStorage.setItem('savedCities',JSON.stringify(savedCities));
+    };
+
+    const get = () =>{
+        if(localStorage.getItem('savedCities')!= null)
+        savedCities = JSON.parse(localStorage.getItem('savedCities'));
+    }
+
+    const remove = (index) =>{
+        if(index < savedCities.length){
+            savedCities.splice(index,1);
+        }
+    }
+
+    const getSavedCities = () =>savedCities;
+
+    return{
+        save,
+        get,
+        remove,
+        getSavedCities
+    }
+
+})();
+
+/*****************
+ * 
+ * Saved cities
+ * 
+ *******************/
+const savedCities = (function(){
+    let container = document.querySelector("#saved-cities-wrapper");
+
+    const drawCity = (city)=>{
+        let cityBox = document.createElement('div'),
+            cityWrapper = document.createComment('div'),
+            deleteWrapper = document.createElement('div'),
+            cityTextNode = document.createElement('h1'),
+            deleteBtn = document.createElement('button');
+
+            cityBox.classList.add('saved-city-box','flex-container');
+            cityTextNode.innerHTML = city;
+            cityTextNode.classList.add('set-city');
+            cityWrapper.classList.add('ripple','set-city');
+            cityWrapper.append(cityTextNode);
+
+            deleteBtn.classList.add('ripple','remove-saved-city');
+            deleteBtn.innerHTML = '-';
+            deleteWrapper.append(deleteBtn);
+            cityBox.append(deleteWrapper);
+
+            container.append(cityBox);
+    };
+
+    
+})();
+
   window.onload = function () {
-      UI.showApp();
+      LOCALSTORAGE.get();
+      let cities = LOCALSTORAGE.getSavedCities();
+      if(cities.length !=0){
+          WEATHER.getWeather(cities[cities.length - 1],false)
+      }
+
+      else UI.showApp();
   }
